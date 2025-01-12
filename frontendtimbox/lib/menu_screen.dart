@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -60,7 +61,11 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             ListTile(
               title: const Text('Cerrar Sesión'),
-              onTap: () {},
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.remove('token'); //Remove token
+                Navigator.of(context).pushReplacementNamed('/login');
+              },
             ),
           ],
         ),
