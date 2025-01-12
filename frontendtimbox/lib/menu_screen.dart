@@ -35,15 +35,27 @@ class _MenuScreenState extends State<MenuScreen> {
               },
             ),
             ListTile(
-              title: const Text('Colaboradores'),
+              title: const Text('Carga de Archivos'),
               onTap: () {
-                Navigator.of(context).pushNamed('/colaboradores');
+                Navigator.of(context).pushNamed('/loadFiles');
               },
             ),
             ListTile(
-              title: const Text('Carga de Archivos'),
+              title: const Text('Colaboradores'),
               onTap: () {
-                Navigator.of(context).pushNamed('/archivos');
+                Navigator.of(context).pushNamed('/collaborators');
+              },
+            ),
+            ListTile(
+              title: const Text('Empleados'),
+              onTap: () {
+                Navigator.of(context).pushNamed('/employees');
+              },
+            ),
+            ListTile(
+              title: const Text('Servicios'),
+              onTap: () {
+                Navigator.of(context).pushNamed('/services');
               },
             ),
             ListTile(

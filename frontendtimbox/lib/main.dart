@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:testtimbox/collaborators_screen.dart';
+import 'package:testtimbox/employees_screen.dart';
+import 'package:testtimbox/load_files_screen.dart';
 import 'package:testtimbox/login_screen.dart';
 import 'package:testtimbox/menu_screen.dart';
-import 'package:testtimbox/password_recovery.dart';
+import 'package:testtimbox/password_recovery_screen.dart';
 import 'package:testtimbox/register_screen.dart';
+import 'package:testtimbox/services_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +30,10 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/passwordRecovery': (context) => const PasswordRecoveryScreen(),
         '/menu': (context) => const MenuScreen(),
+        '/loadFiles': (context) => const LoadFilesScreen(),
+        '/collaborators': (context) => const CollaboratorsScreen(),
+        '/employees': (context) => const EmployeesScreen(),
+        '/services': (context) => const ServicesScreen(),
       },
     );
   }

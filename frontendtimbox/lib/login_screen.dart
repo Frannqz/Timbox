@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/auth_controller.dart';
 import '../utils/validators.dart';
-import 'package:testtimbox/password_recovery.dart'; // Importa tu pantalla de recuperación de contraseña
+import 'package:testtimbox/password_recovery_screen.dart'; // Importa tu pantalla de recuperación de contraseña
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
