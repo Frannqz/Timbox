@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testtimbox/models/user_model.dart';
 
 class AuthService {
   final String _baseUrl = 'http://localhost:3000/api';
+  String? token;
 
   Future<String?> registerUser(UserModel user) async {
     try {
@@ -24,19 +26,27 @@ class AuthService {
     }
   }
 
-  Future<Map<String, dynamic>?> login(String email, String password) async {
+  Future<String?> loginUser(
+      {required String email, required String password}) async {
     final url = Uri.parse('$_baseUrl/login');
     final response = await http.post(
       url,
-      body: jsonEncode({'email': email, 'password': password}),
       headers: {'Content-Type': 'application/json'},
+      body: json.encode({'email': email, 'password': password}),
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      final data = json.decode(response.body);
+      token = data['token'];
+
+      final prefs = await SharedPreferences.getInstance(); //Save token
+      await prefs.setString('token', token!);
+
+      return null;
     } else {
       print('Error: ${response.statusCode}');
-      return null;
+      final error = json.decode(response.body)['error'];
+      return error;
     }
   }
 }

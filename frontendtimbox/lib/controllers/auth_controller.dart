@@ -3,6 +3,7 @@ import '../../services/auth_service.dart';
 
 class AuthController {
   final AuthService _authService = AuthService();
+  String? token;
 
   Future<String?> registerUser({
     required String nombre,
@@ -19,10 +20,12 @@ class AuthController {
     return await _authService.registerUser(user);
   }
 
-  Future<bool> login(String email, String password) async {
-    final response = await _authService.login(email, password);
-    if (response != null) {
-      //-
+  Future<bool> loginUser(String email, String password) async {
+    final error =
+        await _authService.loginUser(email: email, password: password);
+
+    if (error == null) {
+      token = _authService.token;
       return true;
     }
     return false;

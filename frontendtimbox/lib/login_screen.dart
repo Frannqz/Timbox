@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:testtimbox/password_recovery.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../controllers/auth_controller.dart';
+import '../utils/validators.dart';
+import 'package:testtimbox/password_recovery.dart'; // Importa tu pantalla de recuperación de contraseña
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,20 +70,35 @@ class _LoginFormState extends State<_LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
+  final AuthController _authController = AuthController();
 
-  Future<void> _login() async {
+  Future<void> _loginUser() async {
     if (_formKey.currentState!.validate()) {
-      // Simulación de inicio de sesión
-      final email = _emailController.text;
-      final password = _passwordController.text;
-
-      // Aquí puedes llamar al backend para autenticar al usuario
-      print('Iniciar sesión con Email: $email, Password: $password');
-
-      // Mostrar mensaje de éxito o error
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Inicio de sesión exitoso')),
+      final success = await _authController.loginUser(
+        _emailController.text,
+        _passwordController.text,
       );
+
+      if (success) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', _authController.token!);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Inicio de sesión exitoso')),
+        );
+        _emailController.clear();
+        _passwordController.clear();
+        Navigator.of(context).pushReplacementNamed('/menu');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                  'Error: Credenciales incorrectas no coinciden en el sistema')),
+        );
+        _emailController.clear();
+        _passwordController.clear();
+      }
     }
   }
 
@@ -97,12 +115,8 @@ class _LoginFormState extends State<_LoginForm> {
               border: OutlineInputBorder(),
             ),
             validator: (value) {
-              if (value!.isEmpty) {
-                return 'Por favor ingresa tu correo';
-              }
-              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                return 'Ingresa un correo válido';
-              }
+              if (value!.isEmpty) return 'Por favor ingresa tu correo';
+              if (!isValidEmail(value)) return 'Ingresa un correo válido';
               return null;
             },
           ),
@@ -113,7 +127,7 @@ class _LoginFormState extends State<_LoginForm> {
               labelText: 'Contraseña',
               border: OutlineInputBorder(),
             ),
-            obscureText: true,
+            obscureText: !_isPasswordVisible,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Por favor ingresa tu contraseña';
@@ -123,7 +137,7 @@ class _LoginFormState extends State<_LoginForm> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: _login,
+            onPressed: _loginUser,
             child: const Text('Iniciar Sesión'),
           ),
         ],

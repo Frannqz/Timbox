@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:testtimbox/home_screen.dart';
+import 'package:testtimbox/login_screen.dart';
+import 'package:testtimbox/menu_screen.dart';
+import 'package:testtimbox/password_recovery.dart';
 import 'package:testtimbox/register_screen.dart';
 
 void main() {
@@ -18,10 +20,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const LoginScreen(),
       routes: {
         '/register': (context) => const RegisterScreen(),
-        '/login': (context) => const HomeScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/passwordRecovery': (context) => const PasswordRecoveryScreen(),
+        '/menu': (context) => const MenuScreen(),
       },
     );
   }
