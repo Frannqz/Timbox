@@ -83,6 +83,7 @@ class _LoginFormState extends State<_LoginForm> {
       if (success) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', _authController.token!);
+        await prefs.setInt('userId', _authController.user_id!);
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Inicio de sesión exitoso')),

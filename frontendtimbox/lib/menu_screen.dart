@@ -64,6 +64,7 @@ class _MenuScreenState extends State<MenuScreen> {
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 await prefs.remove('token'); //Remove token
+                await prefs.remove('userId'); //Remove userId
                 Navigator.of(context).pushReplacementNamed('/login');
               },
             ),

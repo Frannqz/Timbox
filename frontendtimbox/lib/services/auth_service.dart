@@ -6,6 +6,7 @@ import 'package:testtimbox/models/user_model.dart';
 class AuthService {
   final String _baseUrl = 'http://localhost:3000/api';
   String? token;
+  int? userId;
 
   Future<String?> registerUser(UserModel user) async {
     try {
@@ -38,9 +39,11 @@ class AuthService {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       token = data['token'];
+      userId = data['userId'];
 
       final prefs = await SharedPreferences.getInstance(); //Save token
       await prefs.setString('token', token!);
+      await prefs.setInt('userId', userId!);
 
       return null;
     } else {
