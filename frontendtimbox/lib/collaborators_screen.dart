@@ -150,7 +150,10 @@ class _CollaboratorsScreenState extends State<CollaboratorsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agregar Colaborador'),
+        title: const Text(
+          'Agregar Colaborador',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.blue,
         elevation: 5.0,
       ),
