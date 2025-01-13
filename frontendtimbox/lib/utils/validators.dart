@@ -9,7 +9,8 @@ bool isValidRFC(String rfc) {
 
 //Add collaborators
 bool isValidCURP(String curp) {
-  return RegExp(r'^[A-Z]{4}\d{6}[HM][A-Z]{5}\d{2}$').hasMatch(curp);
+  return RegExp(r'^[A-Z]{4}\d{6}[HM][A-Z]{2}[A-Z0-9]{2}\d{2}[A-Z0-9]{1}\d{1}$')
+      .hasMatch(curp);
 }
 
 bool isValidNSS(String nss) {
