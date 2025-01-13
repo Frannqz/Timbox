@@ -53,65 +53,107 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Registro de Usuario')),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _nombreController,
-                decoration: const InputDecoration(labelText: 'Nombre'),
-                validator: (value) => value!.isEmpty ? 'Campo requerido' : null,
-              ),
-              TextFormField(
-                controller: _emailController,
-                decoration:
-                    const InputDecoration(labelText: 'Correo Electrónico'),
-                validator: (value) {
-                  if (value!.isEmpty) return 'Campo requerido';
-                  if (!isValidEmail(value))
-                    return 'Correo electrónico no válido';
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _rfcController,
-                decoration: const InputDecoration(labelText: 'RFC'),
-                maxLength: 13,
-                validator: (value) {
-                  if (value!.isEmpty) return 'Campo requerido';
-                  if (!isValidRFC(value))
-                    return 'RFC no válido (debe tener 13 caracteres)';
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(labelText: 'Contraseña'),
-                obscureText: true,
-                validator: (value) => value!.isEmpty ? 'Campo requerido' : null,
-              ),
-              TextFormField(
-                controller: _confirmPasswordController,
-                decoration:
-                    const InputDecoration(labelText: 'Confirmar Contraseña'),
-                obscureText: true,
-                validator: (value) {
-                  if (value!.isEmpty) return 'Campo requerido';
-                  if (value != _passwordController.text) {
-                    return 'Las contraseñas no coinciden';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _registerUser,
-                child: const Text('Registrar'),
-              ),
-            ],
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'Crea tu Cuenta',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: _nombreController,
+                  decoration: const InputDecoration(
+                    labelText: 'Nombre',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) =>
+                      value!.isEmpty ? 'Campo requerido' : null,
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    labelText: 'Correo Electrónico',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Campo requerido';
+                    if (!isValidEmail(value))
+                      return 'Correo electrónico no válido';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  controller: _rfcController,
+                  decoration: const InputDecoration(
+                    labelText: 'RFC',
+                    border: OutlineInputBorder(),
+                  ),
+                  maxLength: 13,
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Campo requerido';
+                    if (!isValidRFC(value))
+                      return 'RFC no válido (debe tener 13 caracteres)';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: const InputDecoration(
+                    labelText: 'Contraseña',
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
+                  validator: (value) =>
+                      value!.isEmpty ? 'Campo requerido' : null,
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  controller: _confirmPasswordController,
+                  decoration: const InputDecoration(
+                    labelText: 'Confirmar Contraseña',
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Campo requerido';
+                    if (value != _passwordController.text) {
+                      return 'Las contraseñas no coinciden';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _registerUser,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 10.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  child: const Text(
+                    'Registrar',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

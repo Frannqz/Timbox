@@ -64,44 +64,71 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Recuperar Contraseña'),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextFormField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Correo Electrónico',
-                border: OutlineInputBorder(),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'Recuperación de Contraseña',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              controller: _rfcController,
-              decoration: const InputDecoration(
-                labelText: 'RFC',
-                border: OutlineInputBorder(),
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Correo Electrónico',
+                  hintText: 'Ingresa tu correo electrónico',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.email),
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              controller: _newPasswordController,
-              decoration: const InputDecoration(
-                labelText: 'Nueva Contraseña',
-                border: OutlineInputBorder(),
+              const SizedBox(height: 15),
+              TextFormField(
+                controller: _rfcController,
+                decoration: const InputDecoration(
+                  labelText: 'RFC',
+                  hintText: 'Ingresa tu RFC',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.account_box),
+                ),
+                maxLength: 13,
               ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _recoverPassword,
-              child: const Text('Actualizar Contraseña'),
-            ),
-          ],
+              const SizedBox(height: 15),
+              TextFormField(
+                controller: _newPasswordController,
+                decoration: const InputDecoration(
+                  labelText: 'Nueva Contraseña',
+                  hintText: 'Ingresa tu nueva contraseña',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.lock),
+                ),
+                obscureText: true,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _recoverPassword,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 10.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                child: const Text(
+                  'Actualizar contraseña',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
