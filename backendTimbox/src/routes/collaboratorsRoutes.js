@@ -78,7 +78,7 @@ router.get('/collaborators', async (req, res) => {
     }
 });
 
-//Eliminar Collaborator
+//Delete Collaborator
 router.delete('/collaborators/:id', async (req, res) => {
     const { id } = req.params;
 

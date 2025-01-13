@@ -37,7 +37,7 @@ router.post('/registro', async (req, res) => {
     }
 });
 
-//Iniciar sesion
+//Login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -67,5 +67,34 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
+
+
+//Recovery password
+router.post('/recoveryPassword', async (req, res) => {
+    const { email, rfc, nuevaContraseña } = req.body;
+
+    if (!email || !rfc || !nuevaContraseña) {
+        return res.status(400).json({ error: 'Correo electrónico, RFC y nueva contraseña son requeridos' });
+    }
+
+    try {
+        const result = await client.query('SELECT * FROM usuarios WHERE email = $1 AND rfc = $2', [email, rfc]);
+        const user = result.rows[0];
+
+        if (!user) {
+            return res.status(400).json({ error: 'Correo electrónico o RFC no encontrados' });
+        }
+
+        const hashedPassword = await bcrypt.hash(nuevaContraseña, 10);
+
+        await client.query('UPDATE usuarios SET password = $1 WHERE id = $2', [hashedPassword, user.id]);
+
+        res.json({ message: 'Contraseña actualizada exitosamente' });
+    } catch (err) {
+        console.error('Error al recuperar contraseña', err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
 
 export default router;
