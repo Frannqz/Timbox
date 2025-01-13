@@ -43,7 +43,7 @@ class _CollaboratorsScreenState extends State<CollaboratorsScreen> {
   Future<void> _getUserId() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _userId = prefs.getInt('userId'); // Recupera el userId del almacenamiento
+      _userId = prefs.getInt('userId'); //Recupera el userId del almacenamiento
     });
   }
 

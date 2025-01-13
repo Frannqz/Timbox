@@ -59,6 +59,7 @@ router.post('/addCollaborator', async (req, res) => {
     }
 });
 
+//Get Collaborator
 router.get('/collaborators', async (req, res) => {
     const { user_id } = req.query;
 
@@ -77,5 +78,30 @@ router.get('/collaborators', async (req, res) => {
     }
 });
 
+//Eliminar Collaborator
+router.delete('/collaborators/:id', async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ error: 'El ID del colaborador es obligatorio' });
+    }
+
+    try {
+        const query = 'DELETE FROM colaboradores WHERE id = $1 RETURNING *';
+        const result = await client.query(query, [id]);
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Colaborador no encontrado' });
+        }
+
+        res.status(200).json({
+            message: 'Colaborador eliminado exitosamente',
+            colaborador: result.rows[0],
+        });
+    } catch (err) {
+        console.error('Error al eliminar colaborador:', err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
 
 export default router;
