@@ -141,7 +141,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   color: Colors.blue[50],
-                  elevation: 5, // Sombra del card
+                  elevation: 5,
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(15),
                     title: Text(
