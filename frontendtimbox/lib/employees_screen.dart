@@ -79,48 +79,70 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Empleados'),
+        title: const Text(
+          'Empleados',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blue,
+        elevation: 5,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
               controller: _searchController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Buscar por Nombre, CURP o RFC',
-                border: OutlineInputBorder(),
+                labelStyle: const TextStyle(color: Colors.blue),
+                hintText: 'Introduce el nombre, CURP o RFC del colaborador...',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: const BorderSide(color: Colors.blue, width: 2),
+                ),
               ),
               onChanged: _filterCollaborators,
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _filteredCollaborators.length,
-              itemBuilder: (context, index) {
-                final collaborator = _filteredCollaborators[index];
-                return ListTile(
-                  title: Text(collaborator.nombre),
-                  subtitle: Text(
-                      'CURP: ${collaborator.curp} | RFC: ${collaborator.rfc}'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.edit),
-                        onPressed: () {},
+            const SizedBox(height: 20),
+            // Lista de colaboradores
+            Expanded(
+              child: ListView.builder(
+                itemCount: _filteredCollaborators.length,
+                itemBuilder: (context, index) {
+                  final collaborator = _filteredCollaborators[index];
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(16),
+                      title: Text(
+                        collaborator.nombre,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.delete),
+                      subtitle: Text(
+                        'CURP: ${collaborator.curp} | RFC: ${collaborator.rfc}',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () => _deleteCollaborator(collaborator.id),
                       ),
-                    ],
-                  ),
-                );
-              },
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
